@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import GoalInput from './components/GoalInput'
+import GoalList from './components/GoalList'
 
 export default function App() {
 
-  const [enteredGoal, setEnteredgoal] = useState("");
+  
 
-  const enterGoalHandler = (value) => {
-    setEnteredgoal(value)
-  }
+  
   const [goalList, setGoalList] = useState([]);
 
-  const addGoalHandler = () => {
-    console.log(enteredGoal)
-    setGoalList(goalList => [...goalList, { id: Math.random().toString(), value: enteredGoal }]);
+  const addGoalHandler = (enteredGoalText) => {
+   
+    setGoalList(goalList => [...goalList, { id: Math.random().toString(), value: enteredGoalText }]);
   }
 
 
@@ -20,18 +20,9 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
+      <GoalInput onAddGoal = {addGoalHandler}/>
 
-      <View>
-        <TextInput placeholder="Enter your goal"
-          style={styles.textInputBox}
-          onChangeText={enterGoalHandler}
-          value={enteredGoal}
-        />
-      </View>
-
-      <View>
-        <Button title="Add" onPress={addGoalHandler} />
-      </View>
+      
       {/* <ScrollView>
         {goalList.map(goal => <View key={goal} style={styles.listItem}>
           <Text >{goal}</Text>
@@ -42,15 +33,9 @@ export default function App() {
         keyExtractor={(item, index) => item.id}
         data={goalList}
         renderItem={itemData => (
-          <View style={styles.listItem}>
-            <Text>
-              {itemData.item.value}
-            </Text>
-          </View>
+         <GoalList title = {itemData.item.value}/>
         )} 
         />
-    
-
     </View>
   );
 }
@@ -59,14 +44,5 @@ const styles = StyleSheet.create({
   screen: {
     padding: 50,
   },
-  textInputBox: {
-    padding: 10, borderBottomColor: 'blue', borderWidth: 1
-  },
-  listItem: {
-    padding: 10,
-    marginVertical: 10,
-    borderWidth: 1,
-    backgroundColor: '#ccc',
-    borderBottomColor: 'black'
-  }
+  
 });
