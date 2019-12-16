@@ -5,14 +5,22 @@ import GoalList from './components/GoalList'
 
 export default function App() {
 
-  
 
-  
+
+
   const [goalList, setGoalList] = useState([]);
 
   const addGoalHandler = (enteredGoalText) => {
-   
+
     setGoalList(goalList => [...goalList, { id: Math.random().toString(), value: enteredGoalText }]);
+    
+  }
+
+  const onDeleteHandler = (goalId) => {
+    setGoalList((goalList) => {
+      return goalList.filter((goal) => goal.id !== goalId
+      )
+    })
   }
 
 
@@ -20,22 +28,18 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <GoalInput onAddGoal = {addGoalHandler}/>
-
-      
-      {/* <ScrollView>
-        {goalList.map(goal => <View key={goal} style={styles.listItem}>
-          <Text >{goal}</Text>
-        </View>)}
-      </ScrollView> */}
+      <GoalInput onAddGoal={addGoalHandler} />
 
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={goalList}
         renderItem={itemData => (
-         <GoalList title = {itemData.item.value}/>
-        )} 
-        />
+          <GoalList
+            title={itemData.item.value}
+            id={itemData.item.id}
+            onDelete={onDeleteHandler} />
+        )}
+      />
     </View>
   );
 }
@@ -44,5 +48,5 @@ const styles = StyleSheet.create({
   screen: {
     padding: 50,
   },
-  
+
 });
