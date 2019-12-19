@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 const GameOver = props => {
     return (
@@ -7,6 +7,14 @@ const GameOver = props => {
             <Text>
                 Game is Over
             </Text>
+            <Text>
+                Total Rounds taken: {props.rounds}
+            </Text>
+            <Text>
+                User number was: {props.userNumber}
+            </Text>
+
+            <Button title="NEW GAME" onPress={props.onRestartGame} />
         </View>
     )
 }
